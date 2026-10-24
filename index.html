@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yurexis RolePlay - Магазин</title>
+    <style>
+        /* Базовые настройки стиля */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* Шапка сайта */
+        header {
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Контейнер магазина */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 40px;
+            color: #aaaaaa;
+        }
+
+        /* Сетка товаров */
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Карточка товара */
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #333;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.3);
+            border-color: #ff4b2b;
+        }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background-color: #2a2a2a;
+        }
+        .card h3 {
+            margin: 10px 0;
+            font-size: 22px;
+        }
+        .card p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff416c;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Кнопка */
+        .btn {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Всплывающее окно (Модалка) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            border: 1px solid #ff4b2b;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .close-btn {
+            background: transparent;
+            color: #888;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Yurexis RolePlay</h1>
+    </header>
+
+    <div class="container">
+        <h2>Официальный магазин сервера</h2>
+        
+        <div class="products">
+            <!-- Товар 1 -->
+            <div class="card">
+                <!-- Заглушка вместо картинки -->
+                <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">👕</div>
+                <h3>Любой Скин</h3>
+                <p>Выбери ID любого скина и получи его моментально на свой аккаунт.</p>
+                <span class="price">100 RUB</span>
+                <button class="btn" onclick="openModal('Скин', 100)">Купить</button>
+            </div>
+
+            <!-- Товар 2 -->
+            <div class="card">
+                <!-- Заглушка вместо картинки -->
+                <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">🚗</div>
+                <h3>Любой Транспорт</h3>
+                <p>Крутая тачка прямо к твоему дому. Введи ID желаемой модели.</p>
+                <span class="price">500 RUB</span>
+                <button class="btn" onclick="openModal('Транспорт', 500)">Купить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма покупки -->
+    <div class="modal" id="buyModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Покупка</h3>
+            <p>Укажите данные вашего аккаунта</p>
+            <input type="text" id="nickname" placeholder="Ваш ник (Имя_Фамилия)">
+            <input type="number" id="itemId" placeholder="ID предмета (скина/машины)">
+            <button class="btn" onclick="processPayment()">Перейти к оплате</button>
+            <button class="close-btn" onclick="closeModal()">Отмена</button>
+        </div>
+    </div>
+
+    <!-- JavaScript для интерфейса -->
+    <script>
+        const modal = document.getElementById('buyModal');
+        const title = document.getElementById('modalTitle');
+        let currentPrice = 0;
+
+        function openModal(itemName, price) {
+            title.innerText = 'Покупка: ' + itemName + ' (' + price + ' RUB)';
+            currentPrice = price;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function processPayment() {
+            const nick = document.getElementById('nickname').value;
+            const item = document.getElementById('itemId').value;
+
+            if (nick === '' || item === '') {
+                alert('Пожалуйста, заполните все поля!');
+                return;
+            }
+
+            // Так как сайт на чистом HTML, здесь мы просто показываем сообщение.
+            alert('Привет, ' + nick + '! Для подключения реальной оплаты нужен бэкенд (PHP/Node.js). Сейчас это просто красивый дизайн!');
+            closeModal();
+        }
+    </script>
+
+</body>
+</html>
