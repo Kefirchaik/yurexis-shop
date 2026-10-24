@@ -154,7 +154,6 @@
         <div class="products">
             <!-- Товар 1 -->
             <div class="card">
-                <!-- Заглушка вместо картинки -->
                 <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">👕</div>
                 <h3>Любой Скин</h3>
                 <p>Выбери ID любого скина и получи его моментально на свой аккаунт.</p>
@@ -164,7 +163,6 @@
 
             <!-- Товар 2 -->
             <div class="card">
-                <!-- Заглушка вместо картинки -->
                 <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">🚗</div>
                 <h3>Любой Транспорт</h3>
                 <p>Крутая тачка прямо к твоему дому. Введи ID желаемой модели.</p>
@@ -177,24 +175,26 @@
     <!-- Форма покупки -->
     <div class="modal" id="buyModal">
         <div class="modal-content">
-            <h3 id="modalTitle">Покупка</h3>
-            <p>Укажите данные вашего аккаунта</p>
-            <input type="text" id="nickname" placeholder="Ваш ник (Имя_Фамилия)">
-            <input type="number" id="itemId" placeholder="ID предмета (скина/машины)">
-            <button class="btn" onclick="processPayment()">Перейти к оплате</button>
+            <h3 id="modalTitle">Оформление заказа</h3>
+            <p>Заполните данные. Вы будете перенаправлены в Telegram к администратору для оплаты.</p>
+            <input type="text" id="nickname" placeholder="Ваш игровой ник (Имя_Фамилия)">
+            <input type="number" id="itemId" placeholder="ID желаемого скина или машины">
+            <button class="btn" onclick="processPayment()">Написать администратору</button>
             <button class="close-btn" onclick="closeModal()">Отмена</button>
         </div>
     </div>
 
-    <!-- JavaScript для интерфейса -->
+    <!-- JavaScript для интерфейса и перехода в Telegram -->
     <script>
         const modal = document.getElementById('buyModal');
         const title = document.getElementById('modalTitle');
         let currentPrice = 0;
+        let currentItemName = '';
 
         function openModal(itemName, price) {
             title.innerText = 'Покупка: ' + itemName + ' (' + price + ' RUB)';
             currentPrice = price;
+            currentItemName = itemName;
             modal.style.display = 'flex';
         }
 
@@ -207,12 +207,19 @@
             const item = document.getElementById('itemId').value;
 
             if (nick === '' || item === '') {
-                alert('Пожалуйста, заполните все поля!');
+                alert('Пожалуйста, заполните оба поля: Ник и ID!');
                 return;
             }
 
-            // Так как сайт на чистом HTML, здесь мы просто показываем сообщение.
-            alert('Привет, ' + nick + '! Для подключения реальной оплаты нужен бэкенд (PHP/Node.js). Сейчас это просто красивый дизайн!');
+            // Формируем текст сообщения
+            const text = `Здравствуйте! Хочу купить донат на Yurexis RolePlay.%0A%0AИгровой ник: ${nick}%0AТовар: ${currentItemName} (ID: ${item})%0AСумма к оплате: ${currentPrice} RUB%0A%0AКуда переводить деньги?`;
+            
+            // Ссылка на твой Telegram с предзаполненным текстом
+            const telegramUrl = `https://t.me/kefirchaik?text=${text}`;
+            
+            // Перенаправляем пользователя
+            window.location.href = telegramUrl;
+            
             closeModal();
         }
     </script>
