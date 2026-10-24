@@ -28,15 +28,32 @@
             letter-spacing: 2px;
         }
 
+        /* Способы оплаты (Бейдж) */
+        .payment-methods {
+            background: #1e1e1e;
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 16px;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+        }
+        .payment-methods span {
+            font-weight: bold;
+            color: #fff;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
         /* Контейнер магазина */
         .container {
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 0 auto 40px auto;
             padding: 0 20px;
             text-align: center;
         }
         .container h2 {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: #aaaaaa;
         }
 
@@ -53,22 +70,25 @@
             background-color: #1e1e1e;
             border-radius: 15px;
             padding: 20px;
-            width: 300px;
+            width: 280px;
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 20px rgba(255, 75, 43, 0.3);
             border-color: #ff4b2b;
         }
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
+        .icon-placeholder {
+            height: 140px;
+            background: #2a2a2a;
             border-radius: 10px;
+            line-height: 140px;
+            font-size: 50px;
             margin-bottom: 15px;
-            background-color: #2a2a2a;
         }
         .card h3 {
             margin: 10px 0;
@@ -78,6 +98,7 @@
             color: #888;
             font-size: 14px;
             margin-bottom: 20px;
+            flex-grow: 1;
         }
         .price {
             font-size: 24px;
@@ -112,6 +133,7 @@
             background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
         .modal-content {
             background: #1e1e1e;
@@ -120,6 +142,11 @@
             width: 350px;
             text-align: center;
             border: 1px solid #ff4b2b;
+        }
+        .modal-content p.info-text {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 20px;
         }
         .modal-content input {
             width: 100%;
@@ -131,6 +158,13 @@
             color: white;
             box-sizing: border-box;
             font-size: 16px;
+        }
+        #calculatedPriceBlock {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff416c;
+            margin-bottom: 15px;
+            display: none;
         }
         .close-btn {
             background: transparent;
@@ -148,26 +182,42 @@
         <h1>Yurexis RolePlay</h1>
     </header>
 
+    <div class="payment-methods">
+        Доступные способы оплаты:<br><br>
+        <span>🇺🇦 Банковские карты (Грн)</span> | 
+        <span>⭐️ Telegram Stars</span> | 
+        <span>🪙 Крипта (CryptoBot)</span>
+    </div>
+
     <div class="container">
         <h2>Официальный магазин сервера</h2>
         
         <div class="products">
-            <!-- Товар 1 -->
+            <!-- Товар 1: Скин -->
             <div class="card">
-                <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">👕</div>
+                <div class="icon-placeholder">👕</div>
                 <h3>Любой Скин</h3>
                 <p>Выбери ID любого скина и получи его моментально на свой аккаунт.</p>
-                <span class="price">100 RUB</span>
-                <button class="btn" onclick="openModal('Скин', 100)">Купить</button>
+                <span class="price">50 грн</span>
+                <button class="btn" onclick="openModal('skin', 'Скин', 50)">Купить</button>
             </div>
 
-            <!-- Товар 2 -->
+            <!-- Товар 2: Машина -->
             <div class="card">
-                <div style="height:180px; background:#2a2a2a; border-radius:10px; line-height:180px; font-size:40px;">🚗</div>
+                <div class="icon-placeholder">🚗</div>
                 <h3>Любой Транспорт</h3>
                 <p>Крутая тачка прямо к твоему дому. Введи ID желаемой модели.</p>
-                <span class="price">500 RUB</span>
-                <button class="btn" onclick="openModal('Транспорт', 500)">Купить</button>
+                <span class="price">250 грн</span>
+                <button class="btn" onclick="openModal('car', 'Транспорт', 250)">Купить</button>
+            </div>
+
+            <!-- Товар 3: Валюта BC -->
+            <div class="card">
+                <div class="icon-placeholder">💰</div>
+                <h3>Донат Валюта (BC)</h3>
+                <p>Внутренняя валюта сервера. Курс: 1 грн = 10 BC. Введи нужное количество.</p>
+                <span class="price">от 1 грн</span>
+                <button class="btn" onclick="openModal('bc', 'Донат валюта (BC)', 0)">Купить</button>
             </div>
         </div>
     </div>
@@ -176,26 +226,75 @@
     <div class="modal" id="buyModal">
         <div class="modal-content">
             <h3 id="modalTitle">Оформление заказа</h3>
-            <p>Заполните данные. Вы будете перенаправлены в Telegram к администратору для оплаты.</p>
+            <p class="info-text">Оплата принимается в <b>Грн, Звездах или CryptoBot</b>. После заполнения вы перейдете в Telegram.</p>
+            
             <input type="text" id="nickname" placeholder="Ваш игровой ник (Имя_Фамилия)">
+            
+            <!-- Поле для скина/авто -->
             <input type="number" id="itemId" placeholder="ID желаемого скина или машины">
+            
+            <!-- Поле для BC (скрыто по умолчанию) -->
+            <input type="number" id="bcAmount" placeholder="Количество BC (Например: 1000)" style="display: none;" oninput="calculateBcPrice()">
+            
+            <!-- Динамическая цена для BC -->
+            <div id="calculatedPriceBlock">Сумма к оплате: <span id="finalPrice">0</span> грн</div>
+
             <button class="btn" onclick="processPayment()">Написать администратору</button>
             <button class="close-btn" onclick="closeModal()">Отмена</button>
         </div>
     </div>
 
-    <!-- JavaScript для интерфейса и перехода в Telegram -->
+    <!-- JavaScript для интерфейса и логики заказа -->
     <script>
         const modal = document.getElementById('buyModal');
         const title = document.getElementById('modalTitle');
-        let currentPrice = 0;
-        let currentItemName = '';
+        const itemIdInput = document.getElementById('itemId');
+        const bcAmountInput = document.getElementById('bcAmount');
+        const calculatedPriceBlock = document.getElementById('calculatedPriceBlock');
+        const finalPriceSpan = document.getElementById('finalPrice');
 
-        function openModal(itemName, price) {
-            title.innerText = 'Покупка: ' + itemName + ' (' + price + ' RUB)';
-            currentPrice = price;
+        let currentType = '';
+        let currentItemName = '';
+        let currentPrice = 0;
+
+        // Курс валюты: 1 грн = 10 BC 
+        const BC_RATE = 10; 
+
+        function openModal(type, itemName, price) {
+            currentType = type;
             currentItemName = itemName;
+            currentPrice = price;
+
+            // Сбрасываем поля
+            document.getElementById('nickname').value = '';
+            itemIdInput.value = '';
+            bcAmountInput.value = '';
+
+            if (type === 'bc') {
+                title.innerText = 'Покупка: ' + itemName;
+                itemIdInput.style.display = 'none';
+                bcAmountInput.style.display = 'block';
+                calculatedPriceBlock.style.display = 'block';
+                finalPriceSpan.innerText = '0';
+            } else {
+                title.innerText = 'Покупка: ' + itemName + ' (' + price + ' грн)';
+                itemIdInput.style.display = 'block';
+                bcAmountInput.style.display = 'none';
+                calculatedPriceBlock.style.display = 'none';
+            }
+
             modal.style.display = 'flex';
+        }
+
+        function calculateBcPrice() {
+            let amount = parseInt(bcAmountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+                finalPriceSpan.innerText = '0';
+                currentPrice = 0;
+            } else {
+                currentPrice = Math.ceil(amount / BC_RATE);
+                finalPriceSpan.innerText = currentPrice;
+            }
         }
 
         function closeModal() {
@@ -204,17 +303,39 @@
 
         function processPayment() {
             const nick = document.getElementById('nickname').value;
-            const item = document.getElementById('itemId').value;
-
-            if (nick === '' || item === '') {
-                alert('Пожалуйста, заполните оба поля: Ник и ID!');
+            
+            if (nick === '') {
+                alert('Пожалуйста, введите ваш игровой ник!');
                 return;
             }
 
-            // Формируем текст сообщения
-            const text = `Здравствуйте! Хочу купить донат на Yurexis RolePlay.%0A%0AИгровой ник: ${nick}%0AТовар: ${currentItemName} (ID: ${item})%0AСумма к оплате: ${currentPrice} RUB%0A%0AКуда переводить деньги?`;
+            let orderDetails = '';
+
+            if (currentType === 'bc') {
+                const amount = bcAmountInput.value;
+                if (amount === '' || amount <= 0) {
+                    alert('Введите корректное количество BC!');
+                    return;
+                }
+                orderDetails = `Количество: ${amount} BC`;
+            } else {
+                const item = itemIdInput.value;
+                if (item === '') {
+                    alert('Введите ID предмета (скина/машины)!');
+                    return;
+                }
+                orderDetails = `ID предмета: ${item}`;
+            }
+
+            // Формируем красивый текст для Telegram
+            const text = `Здравствуйте! Хочу купить донат на Yurexis RolePlay.%0A%0A` +
+                         `👤 Игровой ник: ${nick}%0A` +
+                         `🛍 Товар: ${currentItemName}%0A` +
+                         `📌 ${orderDetails}%0A` +
+                         `💵 Сумма к оплате: ${currentPrice} грн%0A%0A` +
+                         `Способ оплаты: (оставьте нужное: Грн / Telegram Stars / CryptoBot)`;
             
-            // Ссылка на твой Telegram с предзаполненным текстом
+            // Ссылка на твой Telegram
             const telegramUrl = `https://t.me/kefirchaik?text=${text}`;
             
             // Перенаправляем пользователя
