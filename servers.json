@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "online": "300",
+    "maxonline": "500",
+    "color": "0ABAB5",
+    "x2": "true",
+    "key": "1424",
+    "name": "STORM RUSSIA",
+    "firstname": "Москва",
+    "logo": "moscow",
+    "secondname": "",
+    "url": "red.blackrussia.online",
+    "ip": "51.75.44.14",
+    "port": "2264"
+  },
+  {
+    "id": 2,
+    "online": "0",
+    "maxonline": "1000",
+    "color": "C0C0C0",
+    "x2": "true",
+    "key": "1424",
+    "name": "STORM RUSSIA",
+    "firstname": "Тестовый",
+    "logo": "arzamas",
+    "secondname": "",
+    "url": "blue.blackrussia.online",
+    "ip": "80.66.82.198",
+    "port": "7780"
+  }
+]
