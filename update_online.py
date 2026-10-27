@@ -31,8 +31,6 @@ if OUTPUT.exists():
 result = {}
 for server in servers:
     key = str(server['id'])
-    if key != '1':
-        continue
     try:
         players, maximum = query(server['ip'], int(server['port']))
         result[key] = {'online': str(players), 'maxonline': str(maximum)}
