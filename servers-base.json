@@ -6,13 +6,13 @@
     "color": "0ABAB5",
     "x2": "true",
     "key": "1424",
-    "name": "STORM RUSSIA",
+    "name": "YUREXIS RP",
     "firstname": "Москва",
-    "logo": "moscow",
+    "logo": "moscow.blackrussia.online",
     "secondname": "",
-    "url": "red.blackrussia.online",
-    "ip": "51.75.44.14",
-    "port": "2264"
+    "url": "moscow",
+    "ip": "141.94.184.110",
+    "port": "1481"
   },
   {
     "id": 2,
@@ -21,12 +21,12 @@
     "color": "C0C0C0",
     "x2": "true",
     "key": "1424",
-    "name": "STORM RUSSIA",
+    "name": "YUREXIS RP",
     "firstname": "Тестовый",
     "logo": "arzamas",
     "secondname": "",
     "url": "blue.blackrussia.online",
-    "ip": "80.66.82.198",
-    "port": "7780"
+    "ip": "51.75.44.14",
+    "port": "2264"
   }
 ]
