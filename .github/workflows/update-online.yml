@@ -1,0 +1,35 @@
+
+name: Update SA-MP online
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Update online
+        run: python update_online.py
+
+      - name: Save online
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add online.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update SA-MP online"
+            git push
+          fi
