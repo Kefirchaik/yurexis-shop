@@ -1,6 +1,10 @@
 {
   "1": {
-    "online": "15",
+    "online": "16",
     "maxonline": "100"
+  },
+  "2": {
+    "online": "0",
+    "maxonline": "150"
   }
 }
