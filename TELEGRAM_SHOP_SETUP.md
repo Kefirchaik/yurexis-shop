@@ -36,3 +36,7 @@ After configuring environment variables, set webhook using Bot API `setWebhook` 
 - Review Telegram's rules for payments for digital goods and Stars before enabling card/crypto payment paths inside Telegram
 
 No real payments are initiated by this draft handler.
+
+## Mini App preview
+
+The standalone storefront is at `/miniapp.html` on a Vercel deployment of this branch. Its product buttons use `https://t.me/yurexis_pay_bot?start=shop_<product-id>` and continue the order in the bot chat. It does not collect payment data or trust unverified Telegram identity. Register the Mini App URL in BotFather only after testing the deployment. Full in-app order checkout and verified Telegram initData are not implemented yet.
