@@ -40,7 +40,7 @@ function summary(o){return 'Заказ #'+o.id+'\n👤 '+o.nick+'\n🛍 '+o.name
 async function catalog(chat){await say(chat,'🛒 YUREXIS RP SHOP\nВыберите товар. Цены: 1 ⭐ = 1 ₴.',buttons(items.map(x=>[[x[1]+' — '+x[2]+' ₴', 'item:'+x[0]]]).concat([[['🌐 Открыть магазин','webhint']],[['📦 Мои заказы','mine']]])));}
 async function handleMessage(m){
  const id=String(m.from.id), chat=m.chat.id, txt=(m.text||'').trim();
- if(txt==='/start'||txt==='/shop'||txt==='🏪 Магазин'){await state(id,{});await catalog(chat);return;}
+ if(txt.startsWith('/start shop_')){const key=txt.slice('/start shop_'.length).trim();if(itemById[key]){await state(id,{step:'nick',item:key});await say(chat,'Вы выбрали '+itemById[key][1]+'.\\nВведите игровой ник Name_Surname.');return;}}\n if(txt==='/start'||txt==='/shop'||txt==='🏪 Магазин'){await state(id,{});await catalog(chat);return;}
  if(txt==='/orders'){await mine(id,chat);return;}
  const s=await readState(id);
  if(!s||!s.step){await say(chat,'Для покупки нажмите /shop');return;}
