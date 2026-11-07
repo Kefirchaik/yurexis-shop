@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111329"><title>YUREXIS RP SHOP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Arial,sans-serif;background:#101225;color:#fff}*{box-sizing:border-box}body{margin:0;padding:22px 16px 40px;background:linear-gradient(160deg,#191b3b,#101225 45%);min-height:100vh}header{display:flex;justify-content:space-between;align-items:center;gap:12px}.tag{font-size:12px;color:#c6b9ff;background:#36305f;padding:7px 11px;border-radius:99px}h1{font-size:27px;margin:22px 0 5px}p{color:#aeb1c8;margin:0 0 22px}.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px}.tab{border:1px solid #373954;background:#232540;color:#d6d7ed;padding:10px 15px;border-radius:13px;white-space:nowrap}.tab.active{background:#765af2;border-color:#765af2;color:white}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{background:#232640;border:1px solid #363958;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:166px}.emoji{font-size:29px}.name{font-size:15px;font-weight:700;line-height:1.35;flex:1}.price{font-size:15px;color:#d4c9ff}.buy{border:0;border-radius:11px;background:#765af2;color:#fff;font-weight:700;padding:12px;cursor:pointer}footer{color:#aeb1c8;font-size:12px;text-align:center;margin-top:30px}a{color:#cbbcff}
+</style></head><body>
+<header><strong>💎 YUREXIS RP</strong><span class="tag">OFFICIAL SHOP</span></header>
+<h1>Игровой магазин 🛍</h1><p>Выбери товар и оформи заказ через Telegram-бота. Проверка оплаты — вручную.</p>
+<nav class="tabs" id="tabs" aria-label="Категории"></nav><main class="grid" id="grid"></main>
+<footer>⭐ 1 звезда = 1 ₴ · Все заказы проверяет администратор<br>Поддержка: <a href="https://t.me/kefirchaik">@kefirchaik</a></footer>
+<script>
+const bot='yurexis_pay_bot';
+const products=[
+{id:'bc30',cat:'bc',icon:'🪙',name:'30 000 BC',price:25},{id:'bc60',cat:'bc',icon:'🪙',name:'60 000 BC',price:50},{id:'bc100',cat:'bc',icon:'🪙',name:'100 000 BC',price:100},{id:'bc200',cat:'bc',icon:'🪙',name:'200 000 BC',price:200},{id:'bc300',cat:'bc',icon:'🪙',name:'300 000 BC',price:300},
+{id:'car',cat:'other',icon:'🚘',name:'Любое Т/С',price:25},{id:'skin',cat:'other',icon:'🎭',name:'Любой скин',price:15},
+{id:'v100',cat:'virts',icon:'💰',name:'100 млн виртов',price:50},{id:'v500',cat:'virts',icon:'💰',name:'500 млн виртов',price:100},{id:'v1000',cat:'virts',icon:'💰',name:'1 млрд виртов',price:150},{id:'v2000',cat:'virts',icon:'💰',name:'2 млрд виртов',price:200}
+];
+const categories=[['all','Все'],['bc','BC'],['other','Т/С и скины'],['virts','Вирты']];let selected='all';
+const tabs=document.getElementById('tabs'),grid=document.getElementById('grid');
+function render(){
+ tabs.replaceChildren();grid.replaceChildren();
+ for(const [id,label] of categories){const b=document.createElement('button');b.className='tab'+(selected===id?' active':'');b.textContent=label;b.onclick=()=>{selected=id;render()};tabs.append(b)}
+ for(const p of products.filter(x=>selected==='all'||x.cat===selected)){
+ const card=document.createElement('article');card.className='product';
+ const icon=document.createElement('div');icon.className='emoji';icon.textContent=p.icon;
+ const name=document.createElement('div');name.className='name';name.textContent=p.name;
+ const price=document.createElement('div');price.className='price';price.textContent=p.price+' ₴ / '+p.price+' ⭐';
+ const btn=document.createElement('button');btn.className='buy';btn.textContent='Оформить';btn.onclick=()=>{const url='https://t.me/'+bot+'?start=shop_'+p.id;const app=window.Telegram&&window.Telegram.WebApp;if(app&&app.openTelegramLink)app.openTelegramLink(url);else window.location.href=url};
+ card.append(icon,name,price,btn);grid.append(card)
+ }
+}
+if(window.Telegram&&window.Telegram.WebApp){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand()}
+render();
+</script></body></html>
